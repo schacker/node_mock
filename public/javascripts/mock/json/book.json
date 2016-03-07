@@ -1,0 +1,5 @@
+{
+	"errorCode": 200,
+	"errorMsg": "",
+	"data": [{"id": 1, "name": "huangwei"},{"id": 2, "name": "ligexiao"}]
+}
