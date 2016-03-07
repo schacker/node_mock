@@ -32,6 +32,7 @@ if ('development' == app.get('env')) {
 common.readFile('./package.json', function(data){
 	global.painfo = JSON.parse(data.toString());
 	console.log(global.painfo);
+	console.log("使用stash后新增");
 
 	if (global.painfo && !global.painfo.usemock) {
 		app.get(/\/\s*/, _router.hw.route); //调用路由转发
