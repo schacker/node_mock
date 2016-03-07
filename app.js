@@ -23,7 +23,6 @@ app.use(express.static(path.join(__dirname, 'public'))); //静态文件路径
 
 // development only
 if ('development' == app.get('env')) {
-	console.log('env');
   app.use(express.errorHandler());
 }
 
@@ -31,7 +30,6 @@ if ('development' == app.get('env')) {
 //app.get('/index.html', routes.hw._response); //传入参数 正则匹配
 common.readFile('./package.json', function(data){
 	global.painfo = JSON.parse(data.toString());
-	console.log(global.painfo);
 
 	if (global.painfo && !global.painfo.usemock) {
 		app.get(/\/\s*/, _router.hw.route); //调用路由转发
