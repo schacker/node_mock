@@ -12,7 +12,10 @@
     "mustache": "*",
     "mysql": "*"
   },
-  "usemock": false,  //是否采用json文件mock
-  "use_url_map": false,  //是否采用url_map强关联
-  "mock_folder": "public/javascripts/mock/json" //mock文件路径
+  "usemock": false,
+  "use_url_map": false,
+  "mock_folder": "public/javascripts/mock/json",
+  "dbUser": "root",
+  "dbPwd": "root",
+  "dbs": "nodetest"
 }

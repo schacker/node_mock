@@ -27,10 +27,9 @@ if ('development' == app.get('env')) {
 }
 
 //请求列表 可以考虑下使用xml文件管理 请求
-//app.get('/index.html', routes.hw._response); //传入参数 正则匹配
 common.readFile('./package.json', function(data){
 	global.painfo = JSON.parse(data.toString());
-
+    //传入参数 正则匹配
 	if (global.painfo && !global.painfo.usemock) {
 		app.get(/\/\s*/, _router.hw.route); //调用路由转发
 	} else {
@@ -42,7 +41,11 @@ common.readFile('./package.json', function(data){
 	http.createServer(app).listen(app.get('port'), function(){
 		//读取package.json文件，获取配置信息
 		if (global.painfo && !global.painfo.usemock) {
-			_router.hw.connect('', 'nodetest'); //在监听后链接数据库
+            var accesstoken = {
+                user: global.painfo.dbUser,
+                password: global.painfo.dbPwd
+            };
+			_router.hw.connect(accesstoken, global.painfo.dbs); //在监听后链接数据库
 			global.pojoMap = common.getFileNames('routes/pojo'); //数据库方式，每张表为一个pojo类，pojo类包含基础逻辑或直接业务逻辑
 		}
 	  	console.log('Express server listening on port ' + app.get('port'));

@@ -7,7 +7,7 @@ var db = require('mysql');
 var dbtools = {
 	dbObj: {
 		user: 'root',
-		password: 'field'
+		password: 'root'
 	},
 	createClient: function(dbObj) {
 		if (!dbObj) {
