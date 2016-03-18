@@ -33,7 +33,6 @@ common.readFile('./package.json', function(data){
 	if (global.painfo && !global.painfo.usemock) {
 		app.get(/\/\s*/, _router.hw.route); //调用路由转发
 	} else {
-		console.log(_mockserver);
 		app.get(/\/\s*/, _mockserver.parseRequestUrl); //走mock
 	}
 

@@ -6,3 +6,5 @@
 在package.json中，可配置是否使用json mock文件、是否采用url_map强关联、mock文件位置
 # 使用
 直接node app即可，现在数据库方面配置不可变，只能改源码，后期提供配置项
+# 0.0.1
+数据库可配置，修改package.json配置文件即可
