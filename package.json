@@ -12,7 +12,7 @@
     "mustache": "*",
     "mysql": "*"
   },
-  "usemock": false,
+  "usemock": true,
   "use_url_map": false,
   "mock_folder": "public/javascripts/mock/json",
   "dbUser": "root",

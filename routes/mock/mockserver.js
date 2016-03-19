@@ -51,10 +51,9 @@ module.exports.parseRequestUrl = function(req, res, callback) {
 	function responseJson() {
 		var filename = getFileName(current_url).toLowerCase();
 		var fileNames = common.getFileNames(global.painfo.mock_folder); //从配置信息获取mock数据文件夹
-		console.log(fileNames);
 		/*待判断是否存在该文件*/
 		if (fileNames.isInArray(filename)) {
-			filename = 'public/javascripts/mock/json/'+ filename +'.json';
+			filename = global.painfo.mock_folder +"/"+ filename +'.json';
 			filemock(req, res, filename, function(data){
 				callback && callback(data);
 			});
@@ -68,7 +67,7 @@ module.exports.parseRequestUrl = function(req, res, callback) {
  * 读取JSON数据格式文件，将数据包装返给客户端
  */
 function filemock(req, res, filepath, callback){
-	console.log("filemock");
+	console.log("--- reading file ---");
 	fs.readFile(filepath, function(err, data){
 		if (err) {
 			common.send404(req, res);
