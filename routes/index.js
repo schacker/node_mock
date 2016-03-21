@@ -42,7 +42,7 @@ var routerTools = {
 			for (var i = 0;i < len; i++) {
 				var reg = new RegExp('\/' + pojoMap[i] + '\/\s*');
 				if (reg.test(pathname)) {
-					//pojo路由文件必须在routes/下，这里也是优化点，考虑后期，在一次引入后保存在某处，下次需要用的时候直接调用，动态引入
+					//pojo路由文件必须在routes/下
 					return require('./'+ pojoMap[i]);
 				}
 			}
@@ -50,8 +50,8 @@ var routerTools = {
 	},
 	/*
 	 * 连接数据库：
-	 * accesstoken 用户名和密码 {}
-	 * sqlDatabase 数据库名 string
+	 * @accesstoken 用户名和密码 {}
+	 * @sqlDatabase 数据库名 string
 	 */
 	connect: function(accesstoken, sqlDatabase) {
 		var TEST_DATABASE = 'nodetest';
@@ -77,14 +77,13 @@ var routerTools = {
 	},
 	/*
 	 * 统一查询：
-	 * client 数据库实例 {}
-	 * sql 查询语句 string
-	 * callback 查询回调 Function
+	 * @client 数据库实例 {}
+	 * @sql 查询语句 string
+	 * @callback 查询回调 Function
 	 */
 	query: function(client, sql, callback) {
 		if (!client || !sql) {
 			console.log('!client || !sql');
-			return client.end();
 		}
 		client.query(sql, function selectCb(err, results, fields) {
 		    if (err) {
@@ -94,20 +93,19 @@ var routerTools = {
 	      		console.log('callback');
 	      		callback && callback(results);
 	      	}
-		    //client.end();
 		});
 	},
 	/*
 	 * 通过Id查询：
-	 * client 数据库实例 {}
-	 * pojo 表实例 {}
-	 * id 数据项id string
-	 * callback 回调函数 Function
+	 * @client 数据库实例 {}
+	 * @pojo 表实例 {}
+	 * @id 数据项id string
+	 * @callback 回调函数 Function
 	 */
 	getById: function(client, pojo, id, callback) {
 		if (!client || !id) {
 			console.log('!client || !id');
-			return; //client.end();
+			return;
 		}
 		var sql = 'select * from '+ pojo._pojo +' where id = ' + id;
 		client.query(sql, function selectCb(err, results, fields) {
@@ -117,20 +115,19 @@ var routerTools = {
 			if (results) {
 				callback && callback(results);
 			}
-			//client.end();
 		});
 	},
 	/*
 	 * 通过Id查询：
-	 * client 数据库实例 {}
-	 * pojo 表实例 {}
-	 * ids 数据项id串 string  ex: 1,2,3
-	 * callback 回调函数 Function
+	 * @client 数据库实例 {}
+	 * @pojo 表实例 {}
+	 * @ids 数据项id串 string  ex: 1,2,3
+	 * @callback 回调函数 Function
 	 */
 	getByIds: function(client, pojo, ids, callback) {
 		if (!client || !ids) {
 			console.log('!client || !ids');
-			return; //client.end();
+			return;
 		}
 		var sql = 'select * from '+ pojo._pojo +' where id in(' + ids + ')';
 		client.query(sql, function selectCb(err, results, fields) {
@@ -140,20 +137,15 @@ var routerTools = {
 			if (results) {
 				callback && callback(results);
 			}
-			//client.end();
 		});
 	},
 	/*
 	 * 查询当前表所有数据：
-	 * client 数据库实例 {}
-	 * pojo 表实例 {}
-	 * callback 回调函数 Function
+	 * @client 数据库实例 {}
+	 * @pojo 表实例 {}
+	 * @callback 回调函数 Function
 	 */
-	getAll: function() {
-		if (!client || !ids) {
-			console.log('!client || !ids');
-			return; //client.end();
-		}
+	getAll: function(client, pojo) {
 		var sql = 'select * from '+ pojo._pojo;
 		client.query(sql, function selectCb(err, results, fields) {
 			if (err) {
@@ -162,9 +154,8 @@ var routerTools = {
 			if (results) {
 				callback && callback(results);
 			}
-			//client.end();
 		});
 	}
 };
 
-exports.hw = routerTools;
+exports.rt = routerTools;

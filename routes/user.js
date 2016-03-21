@@ -4,12 +4,12 @@
  */
  //类处理思路，参考Java里面的映射
  // 一个初始化函数，处理映射关系
- var db = require('./index.js');
- var common = require('./common/common.js');
  var fs = require('fs');
  var url = require('url');
  var querystring = require('querystring');
  var contype = {'Content-Type': 'text/html'};
+ var rt = require('./index.js');
+ var common = require('./common/common.js');
  //文件mock
  var mockserver = require('./mock/mockserver.js');
 /*
@@ -17,12 +17,6 @@
  */
  function initRoute(req, res, pojo){
  	console.log('user route');
- 	//var filePath = 'public/javascripts/mock/json/node.json';
- 	//mockserver.filemock(req, res, filePath);
- 	//mockserver.parseRequestUrl(req, res);
- 	//getUserByIds(req, res, pojo);
- 	//var fileList = common.getFileList('routes/pojo/');
- 	//console.log(fileList[2].fileName);
  	/* 需要处理调用函数 */
  	getAllUser(req, res, pojo);
  }
@@ -30,7 +24,7 @@
  * 获取所有用户信息
  */
 function getAllUser(req, res) {
-  	db.hw.query(global.client, 'select * from user', function(data) {
+  	rt.rt.query(global.client, 'select * from user', function(data) {
   		if (!data) {
   			common.send404(req, res);
   		} else {
@@ -51,7 +45,7 @@ function getUserById(req, res, pojo) {
 	}
 	var id = getParam(req.url).id;
 	if (id != undefined && id != null) {
-		db.hw.getById(global.client, pojo, id, function(data){
+		rt.rt.getById(global.client, pojo, id, function(data){
 			if (!data) {
 	  			common.send404(req, res);
 	  		} else {
@@ -76,7 +70,7 @@ function getUserByIds(req, res, pojo) {
 	var ids = getParam(req.url).ids;
 	console.log(ids);
 	if (ids != undefined && ids != null) {
-		db.hw.getByIds(global.client, pojo, ids, function(data){
+		rt.rt.getByIds(global.client, pojo, ids, function(data){
 			console.log(data);
 			if (!data) {
 	  			common.send404(req, res);
@@ -109,4 +103,5 @@ function getParam(url){
 
 exports.userAction = getAllUser;
 exports.initRoute = initRoute;
-exports._pojo = 'user'; //每一个数据库实例都必须有的属性_pojo
+//每一个数据库实例都必须有的属性_pojo
+exports._pojo = 'user';
