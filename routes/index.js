@@ -4,13 +4,11 @@
 /*
  * 场景：应该使用node发送数据到前端，然后前端根据数据渲染html，这才是Node.js在javascript中的强大驱动力
  */
-var mustache = require('../public/javascripts/mustache.min.js'); //mustache模板文件
 var fs = require('fs'); //引入文件操作API
 var mysql = require('mysql'); //数据库驱动
 var url = require('url');
 var querystring = require('querystring');
-
-var user = require('./pojo/User.js');
+var common = require('./common/common.js');
 
 var contype = {'Content-Type': 'text/html'};
 
@@ -18,9 +16,7 @@ var routerTools = {
 	// 基路由，走pojo前的路由，也就是决定走哪一个pojo
 	route: function(req, res) {
 		if (!req || !req.url) {
-			res.writeHead(404, contype);
-        	res.write('response dead cause by request url is null！');
-        	res.end();
+			common.send404(req, res, 'response dead cause by request url is null！');
 		} else {
 			//开始走路由
 			var originurl = url.parse(req.url);
@@ -30,9 +26,7 @@ var routerTools = {
 			if (pojo = getPojo(pathname)) { //可以存在对象里，一一映射
 				pojo.initRoute(req, res, pojo);
 			} else {
-				res.writeHead(404, contype);
-        		res.write('response dead cause by: not pojo');
-        		res.end();
+				common.send404(req, res, 'response dead cause by: not pojo');
 			}
 		}
 		//获取pojo实例
