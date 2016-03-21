@@ -10,7 +10,7 @@ var mysql = require('mysql'); //数据库驱动
 var url = require('url');
 var querystring = require('querystring');
 
-var user = require('./user.js');
+var user = require('./pojo/User.js');
 
 var contype = {'Content-Type': 'text/html'};
 
@@ -39,11 +39,12 @@ var routerTools = {
 		function getPojo(pathname) {
 			var pojoMap = global.pojoMap; //可存在xml中，最后解析xml中注入的类（pojo）
 			var len = pojoMap.length;
+			pathname = pathname.toLowerCase();
 			for (var i = 0;i < len; i++) {
-				var reg = new RegExp('\/' + pojoMap[i] + '\/\s*');
+				var reg = new RegExp('\/' + pojoMap[i].toLowerCase() + '\/\s*');
 				if (reg.test(pathname)) {
 					//pojo路由文件必须在routes/下
-					return require('./'+ pojoMap[i]);
+					return require('./pojo/'+ pojoMap[i]);
 				}
 			}
 		}

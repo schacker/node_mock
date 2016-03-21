@@ -107,7 +107,7 @@ module.exports.getFileNames = function(path) {
 	var len = files.length;
 	var fileNames = [];
 	for (var i = 0; i < len; i++) {
-		fileNames.push(files[i].fileName.toLowerCase());
+		fileNames.push(files[i].fileName);
 	}
 	return fileNames;
 }
